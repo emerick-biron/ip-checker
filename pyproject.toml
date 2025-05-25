@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ip-checker"
+version = "1.0.3"
+description = ""
+authors = ["emerick-biron"]
+readme = "README.md"
+packages = [{ include = "ip_checker", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.32.3"
+schedule = "^1.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
