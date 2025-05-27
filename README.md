@@ -65,8 +65,7 @@ The application is configured using **environment variables**. Below are the ava
 | `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` | ❌        | -       | Path to a file containing the full `Authorization` header value                |
 
 > **Note**  
-> Variables ending with `_FILE` always take precedence over their non-`_FILE` counterparts. If both are set, the `_FILE`
-> variant will be used.
+> If both a variable and its `_FILE` variant are set, the `_FILE` variant **always takes precedence**.
 
 ## Usage
 
