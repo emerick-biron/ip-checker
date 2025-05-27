@@ -48,12 +48,12 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **Gotify Notification**
 
-| Variable                      | Required                                 | Default | Description                                |
-|-------------------------------|------------------------------------------|---------|--------------------------------------------|
-| `IPCHECKER_GOTIFY_URL`        | ✅                                        | -       | Gotify server URL                          |
-| `IPCHECKER_GOTIFY_TOKEN`      | ❌  ⚠️ (if `IPCHECKER_GOTIFY_TOKEN`)      | -       | Gotify application token                   |
-| `IPCHECKER_GOTIFY_TOKEN_FILE` | ❌  ⚠️ (if `IPCHECKER_GOTIFY_TOKEN_FILE`) | -       | Path to a file containing the Gotify token |
-| `IPCHECKER_GOTIFY_PRIORITY`   | ❌                                        | `10`    | Gotify message priority (1-10)             |
+| Variable                      | Required                              | Default | Description                                |
+|-------------------------------|---------------------------------------|---------|--------------------------------------------|
+| `IPCHECKER_GOTIFY_URL`        | ✅                                     | -       | Gotify server URL                          |
+| `IPCHECKER_GOTIFY_TOKEN`      | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN`)      | -       | Gotify application token                   |
+| `IPCHECKER_GOTIFY_TOKEN_FILE` | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN_FILE`) | -       | Path to a file containing the Gotify token |
+| `IPCHECKER_GOTIFY_PRIORITY`   | ❌                                     | `10`    | Gotify message priority (1-10)             |
 
 ### **Webhook Notification**
 
