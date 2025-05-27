@@ -29,40 +29,44 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **General Settings**
 
-| Variable                              | Description                                                                 | Default |
-|---------------------------------------|-----------------------------------------------------------------------------|---------|
-| `IPCHECKER_CHECK_INTERVAL`            | Interval in minutes between IP checks                                       | `30`    |
-| `IPCHECKER_NOTIFICATION_CHANNELS`     | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`) | `""`    |
-| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | Maximum number of retry attempts for failed notifications before giving up  | `5`     |
+| Variable                              | Required | Default | Description                                                                 |
+|---------------------------------------|----------|---------|-----------------------------------------------------------------------------|
+| `IPCHECKER_CHECK_INTERVAL`            | ❌        | `30`    | Interval in minutes between IP checks                                       |
+| `IPCHECKER_NOTIFICATION_CHANNELS`     | ❌        | `""`    | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`) |
+| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | ❌        | `5`     | Maximum number of retry attempts for failed notifications before giving up  |
 
 ### **SMTP (Email) Notification**
 
-| Variable                         | Description                                 | Required                           |
-|----------------------------------|---------------------------------------------|------------------------------------|
-| `IPCHECKER_SMTP_SERVER`          | SMTP server address                         | ✅                                  |
-| `IPCHECKER_SMTP_PORT`            | SMTP server port                            | ✅                                  |
-| `IPCHECKER_SMTP_SENDER_EMAIL`    | Sender email address                        | ✅                                  |
-| `IPCHECKER_SMTP_RECIPIENT_EMAIL` | Recipient email address                     | ❌ (defaults to sender)             |
-| `IPCHECKER_SMTP_PASSWORD`        | SMTP authentication password                | ❌                                  |
-| `IPCHECKER_SMTP_PASSWORD_FILE`   | Path to a file containing the SMTP password | ❌   (takes precedence if provided) |
+| Variable                         | Required                                       | Default                       | Description                                                                |
+|----------------------------------|------------------------------------------------|-------------------------------|----------------------------------------------------------------------------|
+| `IPCHECKER_SMTP_SERVER`          | ✅                                              |                               | SMTP server address                                                        |
+| `IPCHECKER_SMTP_PORT`            | ✅                                              |                               | SMTP server port                                                           |
+| `IPCHECKER_SMTP_SENDER_EMAIL`    | ✅                                              |                               | Sender email address                                                       |
+| `IPCHECKER_SMTP_RECIPIENT_EMAIL` | ❌                                              | `IPCHECKER_SMTP_SENDER_EMAIL` | Recipient email address                                                    |
+| `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD` not set)      |                               | SMTP authentication password                                               |
+| `IPCHECKER_SMTP_PASSWORD_FILE`   | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) |                               | Path to a file containing the SMTP password (takes precedence if provided) |
 
 ### **Gotify Notification**
 
-| Variable                      | Description                                | Required                       |
-|-------------------------------|--------------------------------------------|--------------------------------|
-| `IPCHECKER_GOTIFY_URL`        | Gotify server URL                          | ✅                              |
-| `IPCHECKER_GOTIFY_TOKEN`      | Gotify application token                   | ❌ (or use `GOTIFY_TOKEN_FILE`) |
-| `IPCHECKER_GOTIFY_TOKEN_FILE` | Path to a file containing the Gotify token | ❌                              |
-| `IPCHECKER_GOTIFY_PRIORITY`   | Gotify message priority (1-10)             | `10`                           |
+| Variable                      | Required                                 | Default | Description                                |
+|-------------------------------|------------------------------------------|---------|--------------------------------------------|
+| `IPCHECKER_GOTIFY_URL`        | ✅                                        |         | Gotify server URL                          |
+| `IPCHECKER_GOTIFY_TOKEN`      | ❌  ⚠️ (if `IPCHECKER_GOTIFY_TOKEN`)      |         | Gotify application token                   |
+| `IPCHECKER_GOTIFY_TOKEN_FILE` | ❌  ⚠️ (if `IPCHECKER_GOTIFY_TOKEN_FILE`) |         | Path to a file containing the Gotify token |
+| `IPCHECKER_GOTIFY_PRIORITY`   | ❌                                        | `10`    | Gotify message priority (1-10)             |
 
 ### **Webhook Notification**
 
-| Variable                             | Description                                                                    | Required                         |
-|--------------------------------------|--------------------------------------------------------------------------------|----------------------------------|
-| `IPCHECKER_WEBHOOK_URL`              | Webhook endpoint URL to send the notification to                               | ✅                                |
-| `IPCHECKER_WEBHOOK_METHOD`           | HTTP method to use (`POST`, `PUT`, etc.)                                       | ❌ (defaults to `POST`)           |
-| `IPCHECKER_WEBHOOK_AUTH_HEADER`      | Full value of the `Authorization` header (e.g. `Bearer abc123`, `Basic xyz==`) | ❌                                |
-| `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` | Path to a file containing the full `Authorization` header value                | ❌ (takes precedence if provided) |
+| Variable                             | Required | Default | Description                                                                    |
+|--------------------------------------|----------|---------|--------------------------------------------------------------------------------|
+| `IPCHECKER_WEBHOOK_URL`              | ✅        |         | Webhook endpoint URL to send the notification to                               |
+| `IPCHECKER_WEBHOOK_METHOD`           | ❌        | `POST`  | HTTP method to use (`POST`, `PUT`, etc.)                                       |
+| `IPCHECKER_WEBHOOK_AUTH_HEADER`      | ❌        |         | Full value of the `Authorization` header (e.g. `Bearer abc123`, `Basic xyz==`) |
+| `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` | ❌        |         | Path to a file containing the full `Authorization` header value                |
+
+> **Note**  
+> Variables ending with `_FILE` always take precedence over their non-`_FILE` counterparts. If both are set, the `_FILE`
+> variant will be used.
 
 ## Usage
 
