@@ -37,14 +37,14 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **SMTP (Email) Notification**
 
-| Variable                         | Required                                       | Default                       | Description                                                                |
-|----------------------------------|------------------------------------------------|-------------------------------|----------------------------------------------------------------------------|
-| `IPCHECKER_SMTP_SERVER`          | ✅                                              |                               | SMTP server address                                                        |
-| `IPCHECKER_SMTP_PORT`            | ✅                                              |                               | SMTP server port                                                           |
-| `IPCHECKER_SMTP_SENDER_EMAIL`    | ✅                                              |                               | Sender email address                                                       |
-| `IPCHECKER_SMTP_RECIPIENT_EMAIL` | ❌                                              | `IPCHECKER_SMTP_SENDER_EMAIL` | Recipient email address                                                    |
-| `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD` not set)      |                               | SMTP authentication password                                               |
-| `IPCHECKER_SMTP_PASSWORD_FILE`   | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) |                               | Path to a file containing the SMTP password (takes precedence if provided) |
+| Variable                         | Required                                       | Default      | Description                                                                |
+|----------------------------------|------------------------------------------------|--------------|----------------------------------------------------------------------------|
+| `IPCHECKER_SMTP_SERVER`          | ✅                                              |              | SMTP server address                                                        |
+| `IPCHECKER_SMTP_PORT`            | ✅                                              |              | SMTP server port                                                           |
+| `IPCHECKER_SMTP_SENDER_EMAIL`    | ✅                                              |              | Sender email address                                                       |
+| `IPCHECKER_SMTP_RECIPIENT_EMAIL` | ❌                                              | sender email | Recipient email address                                                    |
+| `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD` not set)      |              | SMTP authentication password                                               |
+| `IPCHECKER_SMTP_PASSWORD_FILE`   | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) |              | Path to a file containing the SMTP password (takes precedence if provided) |
 
 ### **Gotify Notification**
 
