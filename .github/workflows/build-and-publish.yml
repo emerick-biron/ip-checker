@@ -9,6 +9,9 @@ jobs:
     name: Build and Publish Python Package
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,11 +42,15 @@ jobs:
           files: |
             dist/*.whl
             dist/*.tar.gz
-          token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-publish-docker:
     name: Build and Publish Docker Image
     runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -55,9 +62,9 @@ jobs:
       - name: Login to Docker Registry
         uses: docker/login-action@v3
         with:
-          registry: registry.ebiron.fr
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract release tag
         id: extract_tag
@@ -72,5 +79,5 @@ jobs:
           context: .
           push: true
           tags: |
-            registry.ebiron.fr/ricko/ip-checker:latest
-            registry.ebiron.fr/ricko/ip-checker:${{ steps.extract_tag.outputs.tag }}
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ steps.extract_tag.outputs.tag }}
