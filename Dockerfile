@@ -1,32 +1,31 @@
-FROM python:3.12-alpine AS builder
+FROM python:3.12-slim AS builder
 
-RUN pip install poetry==1.8.4
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-ENV POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
-RUN touch README.md
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev
 
-# --without dev 
-RUN --mount=type=cache,target=$POETRY_CACHE_DIR poetry install --no-root
+COPY . /app
 
-FROM python:3.12-alpine AS runtime
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 
-RUN adduser -D ipchecker
+FROM python:3.12-slim
 
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"
+RUN useradd -m -u 1000 ipchecker
 
-COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+COPY --from=builder --chown=ipchecker:ipchecker /app /app
 
-COPY src/ip_checker ./ip_checker
+WORKDIR /app
 
-RUN chown -R ipchecker:ipchecker /app
+ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1
 
 USER ipchecker
 

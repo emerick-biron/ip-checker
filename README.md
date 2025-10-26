@@ -20,7 +20,7 @@ changes through multiple notification channels (SMTP, Gotify). The application i
 ### Prerequisites
 
 - **Python 3.12+**
-- **Poetry** (for dependency management)
+- **uv** (for dependency management)
 - **Docker** (if running in a container)
 
 ## Configuration
@@ -71,14 +71,14 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **Running Locally**
 
-1. Install dependencies using Poetry:
+1. Install dependencies:
    ```bash
-   poetry install
+   uv sync
    ```
 2. Set the necessary environment variables.
 3. Run the application:
    ```bash
-   poetry run python -m ip_checker
+   uv run python -m ip_checker
    ```
 
 ### **Running with Docker**
@@ -131,15 +131,11 @@ docker compose up -d
 
 ### **Setting up the Development Environment**
 
-1. Install Poetry if not already installed:
+1. Install dependencies:
    ```bash
-   pip install poetry
+   uv sync
    ```
-2. Install dependencies:
+2. Run the application in development mode:
    ```bash
-   poetry install
-   ```
-3. Run the application in development mode:
-   ```bash
-   poetry run python -m ip_checker
+   uv run python -m ip_checker
    ```

@@ -1,17 +1,24 @@
-[tool.poetry]
+[project]
 name = "ip-checker"
 version = "1.0.3"
 description = ""
-authors = ["emerick-biron"]
+authors = [{ name = "emerick-biron" }]
+requires-python = ">=3.12"
 readme = "README.md"
-packages = [{ include = "ip_checker", from = "src" }]
+dependencies = ["requests>=2.32.3,<3", "schedule>=1.2.2,<2"]
 
-[tool.poetry.dependencies]
-python = "^3.12"
-requests = "^2.32.3"
-schedule = "^1.2.2"
+[project.scripts]
+ip-checker = "ip_checker.__main__:main"
 
+[tool.hatch.build.targets.sdist]
+include = ["src/ip_checker"]
+
+[tool.hatch.build.targets.wheel]
+include = ["src/ip_checker"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/ip_checker" = "ip_checker"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
