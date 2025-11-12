@@ -13,6 +13,8 @@ from ip_checker.notifications.notification_channel import NotificationChannel
 from ip_checker.notifications.smtp_notification import SMTPNotification
 from ip_checker.notifications.webhook_notification import WebhookNotification
 
+from ip_checker.config import IPCHECKER_HOSTNAME
+
 
 class IPChecker:
     def __init__(self):
@@ -24,8 +26,8 @@ class IPChecker:
             current_dt = datetime.datetime.now()
             self.send_notifications(
                 NotificationMessage(
-                    subject="IP Checker",
-                    content=f"IP Checker started at {current_dt.strftime('%Y-%m-%d %H:%M:%S')}.\nCurrent IP : {self.old_ip}"
+                    subject=f"IP Checker on {IPCHECKER_HOSTNAME}",
+                    content=f"IP Checker started at {current_dt.strftime('%Y-%m-%d %H:%M:%S')} on {IPCHECKER_HOSTNAME}.\nCurrent IP : {self.old_ip}"
                 )
             )
 
@@ -54,7 +56,7 @@ class IPChecker:
             response = session.get('https://api.ipify.org')
             response.raise_for_status()
             current_ip = response.text.strip()
-            logging.info(f"Current ip {current_ip}")
+            logging.info(f"Current ip {current_ip} on {IPCHECKER_HOSTNAME}")
             return current_ip
         except requests.RequestException as e:
             logging.error(f"Error while retrieving IP: {e}")

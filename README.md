@@ -29,11 +29,12 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **General Settings**
 
-| Variable                              | Required | Default | Description                                                                 |
-|---------------------------------------|----------|---------|-----------------------------------------------------------------------------|
-| `IPCHECKER_CHECK_INTERVAL`            | ❌        | `30`    | Interval in minutes between IP checks                                       |
-| `IPCHECKER_NOTIFICATION_CHANNELS`     | ❌        | `""`    | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`) |
-| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | ❌        | `5`     | Maximum number of retry attempts for failed notifications before giving up  |
+| Variable                              | Required | Default         | Description                                                                 |
+|---------------------------------------|----------|-----------------|-----------------------------------------------------------------------------|
+| `IPCHECKER_CHECK_INTERVAL`            | ❌        | `30`            | Interval in minutes between IP checks                                       |
+| `IPCHECKER_NOTIFICATION_CHANNELS`     | ❌        | `""`            | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`) |
+| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | ❌        | `5`             | Maximum number of retry attempts for failed notifications before giving up  |
+| `IPCHECKER_HOSTNAME`                  | ❌        | System hostname | Custom hostname to display in notifications (defaults to system hostname)   |
 
 ### **SMTP (Email) Notification**
 

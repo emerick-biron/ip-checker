@@ -1,6 +1,6 @@
 import logging
 import os
-
+import socket
 
 class MissingEnvironmentVariable(Exception):
     pass
@@ -38,6 +38,8 @@ IPCHECKER_CHECK_INTERVAL = int(os.getenv("IPCHECKER_CHECK_INTERVAL", 30))
 IPCHECKER_NOTIFICATION_CHANNELS = os.getenv("IPCHECKER_NOTIFICATION_CHANNELS", "").split(",")
 
 IPCHECKER_NOTIFICATIONS_MAX_RETRIES = int(os.getenv("IPCHECKER_NOTIFICATIONS_MAX_RETRIES", 3))
+
+IPCHECKER_HOSTNAME = os.getenv("IPCHECKER_HOSTNAME", socket.gethostname())
 
 if IPCHECKER_SMTP_PASSWORD_FILE:
     try:
