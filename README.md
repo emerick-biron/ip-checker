@@ -12,6 +12,7 @@ changes through multiple notification channels (SMTP, Gotify). The application i
     - **SMTP (Email)**
     - **Gotify (Self-hosted push notifications)**
     - **Webhook (Custom endpoints, e.g., n8n, Discord, etc.)**
+  - **Telegram (Bot API)**
 - Retries failed notifications automatically.
 - Can be deployed as a **Docker container**.
 
@@ -29,12 +30,12 @@ The application is configured using **environment variables**. Below are the ava
 
 ### **General Settings**
 
-| Variable                              | Required | Default         | Description                                                                 |
-|---------------------------------------|----------|-----------------|-----------------------------------------------------------------------------|
-| `IPCHECKER_CHECK_INTERVAL`            | ❌        | `30`            | Interval in minutes between IP checks                                       |
-| `IPCHECKER_NOTIFICATION_CHANNELS`     | ❌        | `""`            | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`) |
-| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | ❌        | `5`             | Maximum number of retry attempts for failed notifications before giving up  |
-| `IPCHECKER_HOSTNAME`                  | ❌        | System hostname | Custom hostname to display in notifications (defaults to system hostname)   |
+| Variable                              | Required | Default         | Description                                                                             |
+|---------------------------------------|----------|-----------------|-----------------------------------------------------------------------------------------|
+| `IPCHECKER_CHECK_INTERVAL`            | ❌        | `30`            | Interval in minutes between IP checks                                                   |
+| `IPCHECKER_NOTIFICATION_CHANNELS`     | ❌        | `""`            | Comma-separated list of notification channels (`smtp`, `gotify`, `webhook`, `telegram`) |
+| `IPCHECKER_NOTIFICATIONS_MAX_RETRIES` | ❌        | `5`             | Maximum number of retry attempts for failed notifications before giving up              |
+| `IPCHECKER_HOSTNAME`                  | ❌        | System hostname | Custom hostname to display in notifications (defaults to system hostname)               |
 
 ### **SMTP (Email) Notification**
 
@@ -44,26 +45,34 @@ The application is configured using **environment variables**. Below are the ava
 | `IPCHECKER_SMTP_PORT`            | ✅                                              | -            | SMTP server port                                                           |
 | `IPCHECKER_SMTP_SENDER_EMAIL`    | ✅                                              | -            | Sender email address                                                       |
 | `IPCHECKER_SMTP_RECIPIENT_EMAIL` | ❌                                              | sender email | Recipient email address                                                    |
-| `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD` not set)      | -            | SMTP authentication password                                               |
-| `IPCHECKER_SMTP_PASSWORD_FILE`   | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) | -            | Path to a file containing the SMTP password (takes precedence if provided) |
+| `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) | -            | SMTP authentication password                                               |
+| `IPCHECKER_SMTP_PASSWORD_FILE`   | ⚠️ (if `IPCHECKER_SMTP_PASSWORD` not set)      | -            | Path to a file containing the SMTP password (takes precedence if provided) |
 
 ### **Gotify Notification**
 
-| Variable                      | Required                              | Default | Description                                |
-|-------------------------------|---------------------------------------|---------|--------------------------------------------|
-| `IPCHECKER_GOTIFY_URL`        | ✅                                     | -       | Gotify server URL                          |
-| `IPCHECKER_GOTIFY_TOKEN`      | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN`)      | -       | Gotify application token                   |
-| `IPCHECKER_GOTIFY_TOKEN_FILE` | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN_FILE`) | -       | Path to a file containing the Gotify token |
-| `IPCHECKER_GOTIFY_PRIORITY`   | ❌                                     | `10`    | Gotify message priority (1-10)             |
+| Variable                      | Required                                      | Default | Description                                |
+|-------------------------------|-----------------------------------------------|---------|--------------------------------------------|
+| `IPCHECKER_GOTIFY_URL`        | ✅                                             | -       | Gotify server URL                          |
+| `IPCHECKER_GOTIFY_TOKEN`      | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN_FILE` not set) | -       | Gotify application token                   |
+| `IPCHECKER_GOTIFY_TOKEN_FILE` | ⚠️ (if `IPCHECKER_GOTIFY_TOKEN` not set)      | -       | Path to a file containing the Gotify token |
+| `IPCHECKER_GOTIFY_PRIORITY`   | ❌                                             | `10`    | Gotify message priority (1-10)             |
 
 ### **Webhook Notification**
 
-| Variable                             | Required | Default | Description                                                                    |
-|--------------------------------------|----------|---------|--------------------------------------------------------------------------------|
-| `IPCHECKER_WEBHOOK_URL`              | ✅        | -       | Webhook endpoint URL to send the notification to                               |
-| `IPCHECKER_WEBHOOK_METHOD`           | ❌        | `POST`  | HTTP method to use (`POST`, `PUT`, etc.)                                       |
-| `IPCHECKER_WEBHOOK_AUTH_HEADER`      | ❌        | -       | Full value of the `Authorization` header (e.g. `Bearer abc123`, `Basic xyz==`) |
-| `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` | ❌        | -       | Path to a file containing the full `Authorization` header value                |
+| Variable                             | Required                                             | Default | Description                                                                    |
+|--------------------------------------|------------------------------------------------------|---------|--------------------------------------------------------------------------------|
+| `IPCHECKER_WEBHOOK_URL`              | ✅                                                    | -       | Webhook endpoint URL to send the notification to                               |
+| `IPCHECKER_WEBHOOK_METHOD`           | ❌                                                    | `POST`  | HTTP method to use (`POST`, `PUT`, etc.)                                       |
+| `IPCHECKER_WEBHOOK_AUTH_HEADER`      | ⚠️ (if `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` not set) | -       | Full value of the `Authorization` header (e.g. `Bearer abc123`, `Basic xyz==`) |
+| `IPCHECKER_WEBHOOK_AUTH_HEADER_FILE` | ⚠️ (if `IPCHECKER_WEBHOOK_AUTH_HEADER` not set)      | -       | Path to a file containing the full `Authorization` header value                |
+
+### **Telegram Notification**
+
+| Variable                            | Required                                            | Default | Description                                                         |
+|-------------------------------------|-----------------------------------------------------|---------|---------------------------------------------------------------------|
+| `IPCHECKER_TELEGRAM_CHAT_ID`        | ✅                                                   | -       | Telegram chat ID (user, group, or channel) to send messages to      |
+| `IPCHECKER_TELEGRAM_BOT_TOKEN`      | ⚠️ (if `IPCHECKER_TELEGRAM_BOT_TOKEN_FILE` not set) | -       | Telegram bot token                                                  |
+| `IPCHECKER_TELEGRAM_BOT_TOKEN_FILE` | ⚠️ (if `IPCHECKER_TELEGRAM_BOT_TOKEN` not set)      | -       | Path to a file containing the Telegram bot token (takes precedence) |
 
 > [!NOTE]
 > If both a variable and its `_FILE` variant are set, the `_FILE` variant **always takes precedence**.
@@ -91,13 +100,16 @@ The application is configured using **environment variables**. Below are the ava
 2. Run the container:
    ```bash
    docker run -e IPCHECKER_CHECK_INTERVAL=30 \
-              -e NOTIFICATION_CHANNELS="smtp,gotify,webhook" \
-              -e SMTP_SERVER="smtp.example.com" \
-              -e SMTP_PORT="587" \
-              -e SMTP_SENDER_EMAIL="sender@example.com" \
-              -e SMTP_PASSWORD="yourpassword" \
-              -e GOTIFY_URL="https://gotify.example.com" \
-              -e GOTIFY_TOKEN="your_token" \
+              -e IPCHECKER_NOTIFICATION_CHANNELS="smtp,gotify,webhook,telegram" \
+              -e IPCHECKER_SMTP_SERVER="smtp.example.com" \
+              -e IPCHECKER_SMTP_PORT="587" \
+              -e IPCHECKER_SMTP_SENDER_EMAIL="sender@example.com" \
+              -e IPCHECKER_SMTP_PASSWORD="yourpassword" \
+              -e IPCHECKER_GOTIFY_URL="https://gotify.example.com" \
+              -e IPCHECKER_GOTIFY_TOKEN="your_token" \
+              -e IPCHECKER_WEBHOOK_URL="https://hooks.example.com/ip-change" \
+              -e IPCHECKER_TELEGRAM_CHAT_ID="123456789" \
+              -e IPCHECKER_TELEGRAM_BOT_TOKEN="your_telegram_bot_token" \
               ip-checker
    ```
 
@@ -113,13 +125,15 @@ services:
     build: .
     environment:
       IPCHECKER_CHECK_INTERVAL: "30"
-      NOTIFICATION_CHANNELS: "smtp,gotify"
-      SMTP_SERVER: "smtp.example.com"
-      SMTP_PORT: "587"
-      SMTP_SENDER_EMAIL: "sender@example.com"
-      SMTP_PASSWORD: "yourpassword"
-      GOTIFY_URL: "https://gotify.example.com"
-      GOTIFY_TOKEN: "your_token"
+      IPCHECKER_NOTIFICATION_CHANNELS: "smtp,gotify,telegram"
+      IPCHECKER_SMTP_SERVER: "smtp.example.com"
+      IPCHECKER_SMTP_PORT: "587"
+      IPCHECKER_SMTP_SENDER_EMAIL: "sender@example.com"
+      IPCHECKER_SMTP_PASSWORD: "yourpassword"
+      IPCHECKER_GOTIFY_URL: "https://gotify.example.com"
+      IPCHECKER_GOTIFY_TOKEN: "your_token"
+      IPCHECKER_TELEGRAM_CHAT_ID: "123456789"
+      IPCHECKER_TELEGRAM_BOT_TOKEN: "your_telegram_bot_token"
 ```
 
 Start the service:

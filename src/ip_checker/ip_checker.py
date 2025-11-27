@@ -6,14 +6,14 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
+from ip_checker.config import IPCHECKER_HOSTNAME
 from ip_checker.config import IPCHECKER_NOTIFICATION_CHANNELS
 from ip_checker.notifications.gotify_notification import GotifyNotification
 from ip_checker.notifications.notification import NotificationMessage
 from ip_checker.notifications.notification_channel import NotificationChannel
 from ip_checker.notifications.smtp_notification import SMTPNotification
+from ip_checker.notifications.telegram_notification import TelegramNotification
 from ip_checker.notifications.webhook_notification import WebhookNotification
-
-from ip_checker.config import IPCHECKER_HOSTNAME
 
 
 class IPChecker:
@@ -38,6 +38,8 @@ class IPChecker:
             self.notification_channels.append(GotifyNotification())
         if "webhook" in IPCHECKER_NOTIFICATION_CHANNELS:
             self.notification_channels.append(WebhookNotification())
+        if "telegram" in IPCHECKER_NOTIFICATION_CHANNELS:
+            self.notification_channels.append(TelegramNotification())
 
     def send_notifications(self, notification_message: NotificationMessage) -> None:
         for channel in self.notification_channels:
