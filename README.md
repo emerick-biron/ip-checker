@@ -12,7 +12,7 @@ changes through multiple notification channels (SMTP, Gotify). The application i
     - **SMTP (Email)**
     - **Gotify (Self-hosted push notifications)**
     - **Webhook (Custom endpoints, e.g., n8n, Discord, etc.)**
-  - **Telegram (Bot API)**
+    - **Telegram (Bot API)**
 - Retries failed notifications automatically.
 - Can be deployed as a **Docker container**.
 
@@ -43,6 +43,7 @@ The application is configured using **environment variables**. Below are the ava
 |----------------------------------|------------------------------------------------|--------------|----------------------------------------------------------------------------|
 | `IPCHECKER_SMTP_SERVER`          | ✅                                              | -            | SMTP server address                                                        |
 | `IPCHECKER_SMTP_PORT`            | ✅                                              | -            | SMTP server port                                                           |
+| `IPCHECKER_SMTP_SENDER_NAME`     | ❌                                              | -            | Sender display name (used as `Name <email>` in the From header)            |
 | `IPCHECKER_SMTP_SENDER_EMAIL`    | ✅                                              | -            | Sender email address                                                       |
 | `IPCHECKER_SMTP_RECIPIENT_EMAIL` | ❌                                              | sender email | Recipient email address                                                    |
 | `IPCHECKER_SMTP_PASSWORD`        | ⚠️ (if `IPCHECKER_SMTP_PASSWORD_FILE` not set) | -            | SMTP authentication password                                               |
