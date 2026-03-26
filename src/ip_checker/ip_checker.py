@@ -71,7 +71,7 @@ class IPChecker:
             current_dt = datetime.datetime.now()
             self.send_notifications(
                 NotificationMessage(
-                    subject="IP Checker",
+                    subject=f"IP Checker on {IPCHECKER_HOSTNAME}",
                     content=f"IP address changed at {current_dt.strftime('%Y-%m-%d %H:%M:%S')}.\n\tOld IP : {self.old_ip}\n\tNew IP : {new_ip}"
                 )
             )
